@@ -1,0 +1,80 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+  display:flex;
+  /* flex-direction: column; */
+  margin: 5% 5% 0 5%;
+  gap: 5%;
+}
+
+h1 {
+  font-size: 50px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-style:italic;
+  margin: 5%;
+}
+
+.display {
+  margin-top: 5%;
+  margin-left: 5%;
+  width: 50%;
+}
+
+.display-heading {
+  display: flex;
+  justify-content: space-around; 
+  margin-bottom: 3%; 
+}
+
+h2 {
+  font-size: 35px;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-style: italic;
+}
+
+.refresh-btn {
+  width: 25%;
+  font-size: 25px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-style: italic;
+  border: 4px solid black;
+  box-shadow: 5px 5px 6px 3px;
+}
+
+.score-form {
+  margin-top: 5%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin-right: 5%
+}
+
+.name-field,
+.score-field {
+  margin-top: 5%;
+  width: 100%;
+}
+
+#name,
+#score {
+  width: 100%;
+  border: 3px solid black;
+  font-size: 25px;
+  padding: 5px;
+}
+
+.submit {
+  margin-top: 5%;
+    width: 30%;
+    font-size: 25px;
+    padding: 10px;
+    align-self: flex-end;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: italic;
+    border: 4px solid black;
+    box-shadow: 5px 5px 6px 3px;
+  }
