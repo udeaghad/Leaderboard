@@ -16,6 +16,11 @@ const getScore = async () => {
   const response = await fetch(request);
   const displayScores = await response.json();
   createList(displayScores.result);
+
+  const scoreItem = document.querySelectorAll('.score-item');
+  for (let i = 0; i < scoreItem.length; i += 2) {
+    scoreItem[i].classList.toggle('bg-color');
+  }
 };
 
 getScore();

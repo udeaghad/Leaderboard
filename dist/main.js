@@ -6,35 +6,33 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var _modules_createList_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(11);
+/* harmony import */ var _modules_CreateGame_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(12);
 // import _ from 'lodash';
 
 
 
-class Score {
-  constructor(name, score) {
-    this.name = name;
-    this.score = score;
-  }
-}
 
-const nameInput = document.querySelector('#name');
-const scoreInput = document.querySelector('#score');
-
-const addItem = () => {
-  const newScore = new Score(nameInput.value, scoreInput.value);
-  (0,_modules_createList_js__WEBPACK_IMPORTED_MODULE_1__["default"])(newScore.name, newScore.score);
-  nameInput.value = '';
-  scoreInput.value = '';
-
-  const scoreItem = document.querySelectorAll('.score-item');
-  for (let i = 0; i < scoreItem.length; i += 1) {
-    scoreItem[i].classList.toggle('bg-color');
-  }
-};
+(0,_modules_CreateGame_js__WEBPACK_IMPORTED_MODULE_2__.createGame)();
 
 const submitBtn = document.querySelector('#submit');
 
-submitBtn.addEventListener('click', addItem);
+submitBtn.addEventListener('click', _modules_CreateGame_js__WEBPACK_IMPORTED_MODULE_2__.postScore);
+
+const getScore = async () => {
+  const baseUrl = `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${_modules_CreateGame_js__WEBPACK_IMPORTED_MODULE_2__.id}/scores/`;
+
+  const request = new Request(baseUrl);
+  const response = await fetch(request);
+  const displayScores = await response.json();
+  (0,_modules_createList_js__WEBPACK_IMPORTED_MODULE_1__["default"])(displayScores.result);
+};
+
+getScore();
+
+const refreshBtn = document.querySelector('.refresh-btn');
+
+refreshBtn.addEventListener('click', () => window.location.reload());
+
 
 /***/ }),
 /* 1 */
@@ -515,15 +513,70 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-const createList = (nameInput, scoreInput) => {
-  const scoresList = document.querySelector('.scores-list');
-  const scoreItem = document.createElement('div');
-  scoreItem.classList.add('score-item');
-  scoreItem.innerHTML = `${nameInput}: ${scoreInput}`;
-  scoresList.appendChild(scoreItem);
+const createList = (record) => {
+  for (let index = 0; index < record.length; index += 1) {
+    const scoresList = document.querySelector('.scores-list');
+    const scoreItem = document.createElement('div');
+    scoreItem.classList.add('score-item');
+    scoreItem.innerHTML = `${record[index].user}: ${record[index].score}`;
+    scoresList.appendChild(scoreItem);
+  }
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createList);
+
+/***/ }),
+/* 12 */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createGame": () => (/* binding */ createGame),
+/* harmony export */   "id": () => (/* binding */ id),
+/* harmony export */   "postScore": () => (/* binding */ postScore)
+/* harmony export */ });
+const createGame = async () => {
+  const baseUrl = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/';
+
+  const result = await fetch(baseUrl, {
+    method: 'POST',
+    body: JSON.stringify({
+      name: 'My Dozzy Race',
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+  const scoreResult = await result.json();
+  return scoreResult;
+};
+
+const id = '5xJIp455K6jXlXaihVnL';
+const player = document.querySelector('#name');
+const playerScore = document.querySelector('#score');
+
+const postScore = async () => {
+  const baseUrl = `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${id}/scores/`;
+
+  const response = await fetch(baseUrl, {
+    method: 'POST',
+    body: JSON.stringify({
+      user: player.value,
+      score: playerScore.value,
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+  player.value = '';
+  playerScore.value = '';
+  const result = await response.json();
+  console.log(result)
+  return result;
+};
+
+
+
 
 /***/ })
 ],
