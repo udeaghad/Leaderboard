@@ -11,12 +11,14 @@ const createGame = async () => {
     },
   });
   const scoreResult = await result.json();
+
   return scoreResult;
 };
 
-const id = '5xJIp455K6jXlXaihVnL';
+const id = 'OCF9lPabP9lxs6hZDHo3';
 const player = document.querySelector('#name');
 const playerScore = document.querySelector('#score');
+const message = document.querySelector('.message');
 
 const postScore = async () => {
   const baseUrl = `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${id}/scores/`;
@@ -34,6 +36,12 @@ const postScore = async () => {
   player.value = '';
   playerScore.value = '';
   const result = await response.json();
+
+  if (result.result) {
+    message.innerHTML = result.result;
+  } else if (result.result === undefined) {
+    message.innerHTML = result.message;
+  }
   return result;
 };
 
